@@ -1,24 +1,52 @@
-# README
+# Sistema de Chamados Internos CGTI
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Este projeto é um sistema de chamados desenvolvido em Ruby on Rails.
 
-Things you may want to cover:
+## Pré-requisitos
 
-* Ruby version
+Certifique-se de ter instalado:
+* Ruby 3.4.5
+* Node.js e Yarn
+* SQLite3
 
-* System dependencies
+## Como Instalar e Rodar (Rápido)
 
-* Configuration
+O projeto possui um script de configuração automatizado que instala dependências, prepara o banco de dados e inicia o servidor.
 
-* Database creation
+No terminal, execute:
 
-* Database initialization
+```bash
+bin/setup
+```
 
-* How to run the test suite
+Isso fará tudo automaticamente. O sistema estará acessível em `http://localhost:3000`.
 
-* Services (job queues, cache servers, search engines, etc.)
+## Como Instalar e Rodar (Manual)
 
-* Deployment instructions
+Caso prefira rodar passo a passo:
 
-* ...
+1. **Instale as dependências:**
+   ```bash
+   bundle install
+   yarn install
+   ```
+
+2. **Prepare o banco de dados:**
+   ```bash
+   bin/rails db:prepare
+   ```
+
+3. **Inicie o servidor:**
+   Execute o comando abaixo para rodar o Rails e o processo de CSS (Tailwind/Build) simultaneamente:
+   ```bash
+   bin/dev
+   ```
+
+## Docker
+
+Para construir e rodar a imagem Docker (foco em produção):
+
+```bash
+docker build -t sistema_chamados_rails .
+docker run -d -p 80:80 --name sistema_chamados sistema_chamados_rails
+```
