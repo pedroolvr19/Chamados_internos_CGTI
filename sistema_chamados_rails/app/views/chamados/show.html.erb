@@ -1,0 +1,163 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="mb-0">
+    <i class="bi bi-ticket-detailed"></i> Chamado #<%= @chamado.id %>
+  </h2>
+  <div>
+    <%= link_to root_path, class: "btn btn-outline-secondary" do %>
+      <i class="bi bi-arrow-left"></i> Voltar
+    <% end %>
+    <%= link_to edit_chamado_path(@chamado), class: "btn btn-warning" do %>
+      <i class="bi bi-pencil"></i> Editar
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-8">
+    <!-- Informações do Chamado -->
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-light">
+        <h5 class="mb-0">Informações do Chamado</h5>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>Data da Solicitação:</strong>
+            <div class="text-muted">
+              <%= @chamado.data_solicitacao.strftime("%d/%m/%Y") %> às <%= @chamado.hora_solicitacao.strftime("%H:%M") %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <strong>Solicitante:</strong>
+            <div><%= @chamado.nome_solicitante %></div>
+          </div>
+          <div class="col-md-4">
+            <strong>Ramal:</strong>
+            <div><%= @chamado.ramal.present? ? @chamado.ramal : "-" %></div>
+          </div>
+          <div class="col-md-4">
+             <strong>Local:</strong>
+             <div><%= @chamado.setor %> <%= " - #{@chamado.andar}" if @chamado.andar.present? %></div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <strong>Descrição da Solicitação:</strong>
+          <div class="p-3 bg-light rounded mt-1">
+            <%= simple_format(@chamado.descricao_solicitacao) %>
+          </div>
+        </div>
+
+        <% if @chamado.detalhe.present? %>
+          <div class="mb-3">
+            <strong>Detalhes Adicionais:</strong>
+            <div class="text-muted"><%= simple_format(@chamado.detalhe) %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Informações do Atendimento -->
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-light">
+        <h5 class="mb-0">Informações do Atendimento</h5>
+      </div>
+      <div class="card-body">
+        <% if @chamado.constatado.blank? && @chamado.providencia.blank? && @chamado.providenciado.blank? %>
+          <div class="text-center text-muted py-4">
+            <i class="bi bi-hourglass-split fs-2"></i>
+            <p class="mt-2 text-info">Aguardando atendimento...</p>
+          </div>
+        <% else %>
+          <% if @chamado.constatado.present? %>
+            <div class="mb-3">
+              <strong>Constatado:</strong>
+              <div><%= simple_format(@chamado.constatado) %></div>
+            </div>
+          <% end %>
+
+          <% if @chamado.providencia.present? %>
+            <div class="mb-3">
+              <strong>Providência:</strong>
+              <div><%= simple_format(@chamado.providencia) %></div>
+            </div>
+          <% end %>
+
+          <% if @chamado.providenciado.present? %>
+            <div class="mb-3">
+              <strong>Providenciado:</strong>
+              <div><%= simple_format(@chamado.providenciado) %></div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <!-- Status Card -->
+    <div class="card shadow-sm mb-4 text-center">
+      <div class="card-body">
+        <h6 class="text-muted mb-3">Status Atual</h6>
+        <span class="badge rounded-pill fs-5 <%= @chamado.badge_class %>">
+          <%= @chamado.status %>
+        </span>
+      </div>
+    </div>
+
+    <!-- Técnico Card -->
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-light">
+        <h6 class="mb-0">Técnico Responsável</h6>
+      </div>
+      <div class="card-body text-center">
+        <% if @chamado.tecnico_responsavel.present? %>
+          <i class="bi bi-person-circle fs-1 text-primary mb-2"></i>
+          <h5 class="card-title"><%= @chamado.tecnico_responsavel %></h5>
+        <% else %>
+          <div class="text-muted py-3">
+            <i class="bi bi-person-x fs-2"></i>
+            <p class="mt-2 mb-0">Não atribuído</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Info Sistema Card -->
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-light">
+        <h6 class="mb-0">Dados do Sistema</h6>
+      </div>
+      <div class="card-body small">
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-muted">Criado em:</span>
+          <span><%= @chamado.created_at.strftime("%d/%m/%Y %H:%M") %></span>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span class="text-muted">Atualizado em:</span>
+          <span><%= @chamado.updated_at.strftime("%d/%m/%Y %H:%M") %></span>
+        </div>
+        <% if @chamado.data_fechamento %>
+          <hr>
+          <div class="d-flex justify-content-between text-success fw-bold">
+            <span>Fechado em:</span>
+            <span><%= @chamado.data_fechamento.strftime("%d/%m/%Y") %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Actions Card -->
+    <div class="card shadow-sm border-danger">
+      <div class="card-body">
+        <h6 class="text-danger mb-3">Finalizar Chamado</h6>
+        <%= button_to @chamado, method: :delete, class: "btn btn-outline-danger w-100", form: { data: { turbo_confirm: "Tem certeza que deseja deletar este chamado? Esta ação não pode ser desfeita." } } do %>
+          <i class="bi bi-trash"></i> Finalizar Chamado
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

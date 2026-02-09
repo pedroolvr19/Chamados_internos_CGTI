@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Chamados" %>
+
+<h1>Chamados</h1>
+
+<div id="chamados">
+  <% @chamados.each do |chamado| %>
+    <%= render chamado %>
+    <p>
+      <%= link_to "Show this chamado", chamado %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New chamado", new_chamado_path %>

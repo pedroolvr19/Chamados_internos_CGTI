@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <title>Sistema de Chamados - Gov.br</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Gov.br DS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@govbr-ds/core@3.6.0/dist/core.min.css">
+
+    <!-- Bootstrap 5 (Optional, keeping for existing views if needed, but likely conflicts. Will try to coexist or favor Gov.br) -->
+    <!-- Note: User requested "exatamente assim" for header/footer which uses br-* classes. -->
+    
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    
+    <style>
+      /* Layout fixes */
+      body { background-color: var(--background-alternative); }
+      .container-lg { max-width: 100%; padding: 0 2rem; } /* Expand logic if needed */
+    </style>
+  </head>
+
+  <body class="d-flex flex-column min-vh-100">
+    
+    <nav class="br-skiplink" role="menubar">
+      <a class="br-item" href="#main-content" role="menuitem" accesskey="1">Ir para o conteúdo <span aria-hidden="true">(1/4)</span> <span aria-hidden="true" class="br-tag text ml-1">1</span></a>
+      <a class="br-item" href="#header-navigation" role="menuitem" accesskey="2">Ir para o menu <span aria-hidden="true">(2/4)</span> <span aria-hidden="true" class="br-tag text ml-1">2</span></a>
+      <a class="br-item" href="#main-searchbox" role="menuitem" accesskey="3">Ir para a busca <span aria-hidden="true">(3/4)</span> <span aria-hidden="true" class="br-tag text ml-1">3</span></a>
+      <a class="br-item" href="#footer" role="menuitem" accesskey="4">Ir para o rodapé <span aria-hidden="true">(4/4)</span> <span aria-hidden="true" class="br-tag text ml-1">4</span></a>
+    </nav>
+
+    <header class="br-header mb-4" id="header" data-sticky="data-sticky">
+      <div class="container-lg">
+        <div class="header-top">
+          <div class="header-logo">
+            <%= image_tag "logo-gov.png", alt: "logo" %>
+            <span class="br-divider vertical"></span>
+            <div class="header-sign ml-2">Superintendência do Desenvolvimento do Nordeste</div>
+          </div>
+          <div class="header-actions">
+            <%= link_to new_chamado_path, class: "br-button primary", type: "button" do %>
+              <i class="fas fa-plus mr-1" aria-hidden="true"></i>
+              Novo Chamado
+            <% end %>
+          </div>
+        </div>
+        <div class="header-bottom">
+          <div class="header-menu">
+            <div class="header-info" style="padding-left: 160px;">
+              <div class="header-title">Gestão de Chamados</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="d-flex flex-fill mb-5" id="main-content">
+      <div class="container-lg">
+        <% if notice %>
+           <div class="br-message success" role="alert">
+            <div class="icon"><i class="fas fa-check-circle" aria-hidden="true"></i></div>
+            <div class="content"><span class="message-title">Sucesso:</span><span class="message-body"><%= notice %></span></div>
+            <div class="close"><button class="br-button circle small" type="button" aria-label="Fechar"><i class="fas fa-times" aria-hidden="true"></i></button></div>
+          </div>
+        <% end %>
+
+        <%= yield %>
+      </div>
+    </main>
+
+    <footer class="br-footer pt-3" id="footer">
+      <div class="container-lg">
+        <div class="info">
+          <div class="text-down-01 text-medium pb-3">Texto destinado a exibição de informações relacionadas à&nbsp;<strong><a href="">licença de uso</a>.</strong></div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Gov.br JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@govbr-ds/core@3.6.0/dist/core.min.js"></script>
+    <script>
+      // Initialize Gov.br components (if needed)
+      // window.BRHeader.default.init();
+    </script>
+  </body>
+</html>

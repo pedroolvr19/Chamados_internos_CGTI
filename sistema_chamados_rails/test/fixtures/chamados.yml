@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  data_solicitacao: 2026-02-09
+  hora_solicitacao: 2026-02-09 11:16:41
+  nome_solicitante: MyString
+  ramal: MyString
+  setor: MyString
+  andar: MyString
+  descricao_solicitacao: MyText
+  constatado: MyText
+  providencia: MyText
+  providenciado: MyText
+  status: MyString
+  detalhe: MyText
+  tecnico_responsavel: MyString
+  data_fechamento: 2026-02-09 11:16:41
+
+two:
+  data_solicitacao: 2026-02-09
+  hora_solicitacao: 2026-02-09 11:16:41
+  nome_solicitante: MyString
+  ramal: MyString
+  setor: MyString
+  andar: MyString
+  descricao_solicitacao: MyText
+  constatado: MyText
+  providencia: MyText
+  providenciado: MyText
+  status: MyString
+  detalhe: MyText
+  tecnico_responsavel: MyString
+  data_fechamento: 2026-02-09 11:16:41

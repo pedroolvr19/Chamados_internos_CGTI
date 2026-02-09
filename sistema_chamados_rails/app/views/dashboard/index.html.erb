@@ -1,0 +1,212 @@
+<div class="row mb-4">
+  <div class="col-md-3">
+    <div class="card stat-card total shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h6 class="text-muted mb-0">Total Chamados</h6>
+            <h2 class="mb-0"><%= @total_chamados %></h2>
+          </div>
+          <i class="bi bi-speedometer2 fs-1 text-primary"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card abertos shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h6 class="text-muted mb-0">Abertos</h6>
+            <h2 class="mb-0"><%= @chamados_abertos %></h2>
+          </div>
+          <i class="bi bi-exclamation-circle fs-1 text-warning"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card atendimento shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h6 class="text-muted mb-0">Em Atendimento</h6>
+            <h2 class="mb-0"><%= @chamados_em_atendimento %></h2>
+          </div>
+          <i class="bi bi-tools fs-1 text-info"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card fechados shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h6 class="text-muted mb-0">Fechados</h6>
+            <h2 class="mb-0"><%= @chamados_fechados %></h2>
+          </div>
+          <i class="bi bi-check-circle fs-1 text-success"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <%= form_tag root_path, method: :get, class: "row g-3 align-items-end" do %>
+      <div class="col-md-3">
+        <label class="form-label">Status</label>
+        <%= select_tag :status, options_for_select(['', 'Aberto', 'Em Atendimento', 'Aguardando Providência', 'Fechado', 'Cancelado'], params[:status]), class: "form-select" %>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Técnico</label>
+        <%= select_tag :tecnico, options_for_select(Tecnico.nomes_ativos, params[:tecnico]), prompt: "Todos", class: "form-select" %>
+      </div>
+      <div class="col-md-auto ms-auto">
+        <div class="d-flex align-items-end gap-2">
+          <button type="submit" class="br-button primary mt-4">
+            <i class="fas fa-filter mr-1"></i> Filtrar
+          </button>
+          <%= link_to root_path, class: "br-button secondary mt-4" do %>
+            <i class="fas fa-times-circle mr-1"></i> Limpar
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="br-table" data-search="data-search" data-selection="data-selection" data-collapse="data-collapse" data-random="data-random">
+  <div class="table-header">
+    <div class="top-bar">
+      <div class="table-title">Chamados Recentes</div>
+    </div>
+    <div class="selected-bar">
+      <div class="info"><span class="count">0</span><span class="text">item selecionado</span></div>
+      <div class="actions-trigger text-nowrap">
+        <button class="br-button circle inverted" type="button" id="button-dropdown-selection" data-toggle="dropdown" data-target="target02-52512" aria-controls="target02-52512" aria-label="Ver mais opções de ação" aria-haspopup="true"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
+        </button>
+        <div class="br-list" id="target02-52512" role="menu" aria-labelledby="button-dropdown-selection" hidden="hidden">
+          <button class="br-item" type="button" data-toggle="" role="menuitem">Ação 1
+          </button><span class="br-divider"></span>
+          <button class="br-item" type="button" role="menuitem">Ação 2
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <table>
+    <caption>Chamados Recentes</caption>
+    <thead>
+      <tr>
+        <td class="column-collapse" scope="col" aria-hidden="true"></td>
+        <th class="column-checkbox" scope="col">
+          <div class="br-checkbox hidden-label">
+            <input id="check-all-52512" name="check-all-52512" type="checkbox" aria-label="Selecionar tudo" data-parent="check-01-52512"/>
+            <label for="check-all-52512">Selecionar todas as linhas</label>
+          </div>
+        </th>
+        <th scope="col">ID</th>
+        <th scope="col">Data/Hora</th>
+        <th scope="col">Solicitante</th>
+        <th scope="col">Setor</th>
+        <th scope="col">Status</th>
+        <th scope="col">Técnico</th>
+        <th scope="col" class="text-end">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @chamados.any? %>
+        <% @chamados.each do |chamado| %>
+          <tr>
+            <td>
+              <button class="br-button circle small" type="button" id="button-line-<%= chamado.id %>" aria-label="Expandir/Retrair" data-toggle="collapse" data-target="collapse-<%= chamado.id %>" aria-describedby="collapse-<%= chamado.id %>"><i class="fas fa-chevron-down" aria-hidden="true"></i>
+              </button>
+            </td>
+            <td>
+              <div class="br-checkbox hidden-label">
+                <input id="check-line-<%= chamado.id %>" name="check-line-<%= chamado.id %>" type="checkbox" aria-label="Selecionar linha <%= chamado.id %>" data-child="check-01-52512"/>
+                <label for="check-line-<%= chamado.id %>">Selecionar linha <%= chamado.id %>></label>
+              </div>
+            </td>
+            <td data-th="ID" class="fw-bold">#<%= chamado.id %></td>
+            <td data-th="Data/Hora">
+              <div><%= chamado.created_at.strftime("%d/%m/%Y") %></div>
+              <small class="text-muted"><%= chamado.created_at.strftime("%H:%M") %></small>
+            </td>
+            <td data-th="Solicitante">
+             <div class="fw-semi-bold"><%= chamado.nome_solicitante %></div>
+             <small class="text-muted">R: <%= chamado.ramal %></small>
+            </td>
+            <td data-th="Setor"><%= chamado.setor %></td>
+            <td data-th="Status">
+              <span class="br-tag status-<%= chamado.status.parameterize %> small">
+                <%= chamado.status %>
+              </span>
+            </td>
+            <td data-th="Técnico">
+               <% if chamado.tecnico_responsavel.present? %>
+                  <i class="fas fa-user-circle mr-1"></i> <%= chamado.tecnico_responsavel %>
+                <% else %>
+                  <span class="text-muted">-</span>
+                <% end %>
+            </td>
+            <td class="text-end">
+              <div class="d-flex justify-content-end gap-2">
+                 <%= link_to chamado_path(chamado), class: "br-button circle small secondary", title: "Visualizar" do %>
+                    <i class="fas fa-eye"></i>
+                  <% end %>
+                  <%= link_to edit_chamado_path(chamado), class: "br-button circle small secondary", title: "Editar" do %>
+                    <i class="fas fa-pen"></i>
+                  <% end %>
+              </div>
+            </td>
+          </tr>
+          <tr class="collapse">
+            <td id="collapse-<%= chamado.id %>" aria-hidden="true" hidden="hidden" colspan="8">
+               <div class="p-3">
+                 <p class="mb-2"><strong>Descrição:</strong> <%= chamado.descricao_solicitacao %></p>
+                 <% if chamado.detalhe.present? %>
+                   <p class="mb-2"><strong>Detalhes:</strong> <%= chamado.detalhe %></p>
+                 <% end %>
+                 <% if chamado.constatado.present? %>
+                   <p class="mb-2"><strong>Constatado:</strong> <%= chamado.constatado %></p>
+                 <% end %>
+               </div>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+         <tr>
+            <td colspan="8" class="text-center py-4">Nenhum chamado encontrado.</td>
+         </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="table-footer">
+    <nav class="br-pagination" aria-label="paginação" data-total="<%= @chamados.count %>" data-current="1" data-per-page="20">
+      <div class="pagination-per-page">
+        <div class="br-select">
+          <div class="br-input">
+            <label for="per-page-selection-random-88546">Exibir</label>
+            <input id="per-page-selection-random-88546" type="text" placeholder=" "/>
+            <button class="br-button" type="button" aria-label="Exibir lista" tabindex="-1" data-trigger="data-trigger"><i class="fas fa-angle-down" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="br-list" tabindex="0">
+            <div class="br-item" tabindex="-1">
+              <div class="br-radio">
+                <input id="per-page-10-random-88546" type="radio" name="per-page-random-88546" value="per-page-10-random-88546" checked="checked"/>
+                <label for="per-page-10-random-88546">10</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="br-divider d-none d-sm-block mx-3"></span>
+      <div class="pagination-information d-none d-sm-flex"><span class="current">1</span>&ndash;<span class="per-page"><%= @chamados.count %></span>&nbsp;de&nbsp;<span class="total"><%= @chamados.count %></span>&nbsp;itens</div>
+    </nav>
+  </div>
+</div>

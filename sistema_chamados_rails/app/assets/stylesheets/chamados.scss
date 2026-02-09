@@ -1,0 +1,675 @@
+// Gov.br Design System Overrides
+
+// Colors
+$gov-blue: #1351B4;
+$gov-yellow: #F2C94C;
+$gov-white: #FFFFFF;
+$gov-text: #333333;
+
+:root {
+  --bs-primary: #{$gov-blue};
+  --bs-primary-rgb: 19, 81, 180;
+  --bs-warning: #{$gov-yellow};
+  --bs-body-color: #{$gov-text};
+}
+
+// Typography
+@import url('https://fonts.googleapis.com/css2?family=Rawline:wght@300;400;500;600;700&display=swap');
+
+body {
+  font-family: 'Rawline', system-ui, -apple-system, sans-serif !important;
+}
+
+// Header
+.br-header {
+  background: white;
+  border-bottom: 1px solid #ccc;
+
+  .top-bar {
+    background: linear-gradient(90deg, #1f509e 0%, #1351B4 100%);
+    color: white;
+    padding: 0.5rem 0;
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    .gov-logo {
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  .main-bar {
+    padding: 1.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .system-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $gov-text;
+      text-decoration: none;
+      border-left: 1px solid #ccc;
+      padding-left: 1rem;
+      margin-left: 1rem;
+    }
+
+    .gov-brand {
+      height: 40px;
+      // Placeholder for logo if needed, otherwise use text
+      font-weight: 900;
+      font-size: 1.8rem;
+      color: $gov-blue;
+      text-decoration: none;
+
+      span {
+        color: $gov-yellow;
+      }
+    }
+  }
+}
+
+// Footer
+.br-footer {
+  background: #071d41;
+  color: white;
+  padding: 2rem 0;
+  margin-top: auto;
+
+  a {
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .logo-bar {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+  }
+}
+
+// Buttons
+.btn-primary {
+  background-color: $gov-blue;
+  border-color: $gov-blue;
+  border-radius: 4px; // Square-ish
+  font-weight: 500;
+
+  &:hover {
+    background-color: darken($gov-blue, 10%);
+    border-color: darken($gov-blue, 10%);
+  }
+}
+
+.btn-success {
+  border-radius: 4px;
+}
+
+// Cards
+.card {
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// Stat Cards from previous step, updated for consistency
+.stat-card {
+  border-left-width: 6px;
+  border-radius: 4px;
+}
+
+// Badges
+.status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+// Navbar overrides for Layout
+.navbar-gov {
+  background-color: white !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .nav-link {
+    color: $gov-blue !important;
+    font-weight: 600;
+
+    &.active {
+      border-bottom: 2px solid $gov-blue;
+    }
+  }
+}
+
+/* --- Table Styles provided by User --- */
+.br-table {
+  --table-padding: var(--spacing-scale-3x, 24px);
+  /* Fallback added */
+  --table-row-size: var(--table-row-medium, 56px);
+  --table-row-small: var(--spacing-scale-base, 8px);
+  --table-row-medium: var(--spacing-scale-2x, 16px);
+  --table-row-large: var(--spacing-scale-3x, 24px);
+
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+.br-table caption {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.br-table .responsive {
+  overflow: auto;
+}
+
+.br-table tr:hover td.column-collapse {
+  background-color: var(--background-alternative);
+  background-image: none;
+}
+
+.br-table .column-collapse {
+  background-color: var(--background-alternative);
+  width: 40px;
+}
+
+.br-table .column-checkbox {
+  width: 24px;
+}
+
+.br-table .table-header {
+  position: relative;
+}
+
+.br-table .table-header.show .top-bar {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.br-table .top-bar {
+  align-items: center;
+  display: flex;
+  padding: 1rem 1.5rem;
+  /* Simplified padding vars */
+}
+
+.br-table .top-bar .title,
+.br-table .top-bar .table-title {
+  color: var(--color);
+  flex-grow: 1;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.br-table .top-bar .actions-trigger {
+  margin-right: 1rem;
+}
+
+.br-table .top-bar .dropdown [data-toggle=dropdown]+*,
+.br-table .top-bar .dropdown [data-toggle=dropdown-legacy]+* {
+  left: auto;
+  right: 0;
+}
+
+@media (min-width: 576px) {
+  .br-table .top-bar title {
+    font-size: 1.5rem;
+  }
+}
+
+.br-table .search-bar {
+  align-items: center;
+  bottom: 0;
+  display: none;
+  height: 56px;
+  left: 0;
+  padding-left: 1.5rem;
+  padding-right: 1rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.br-table .search-bar.show {
+  display: flex;
+}
+
+.br-table .search-bar .br-input {
+  flex: 1;
+}
+
+.br-table .search-bar .br-input label {
+  display: none;
+}
+
+.br-table .search-bar .br-input input {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.br-table .search-bar .br-input input+.br-button {
+  --button-size: var(--button-small);
+  margin-top: 0;
+  position: absolute;
+  right: 0.5rem;
+  top: 0;
+}
+
+.br-table .search-bar .br-input+.br-button {
+  margin-left: 1rem;
+}
+
+.br-table .selected-bar,
+.br-table .selection-bar {
+  --color: #333;
+  --table-padding: 0.5rem 1rem;
+  align-items: center;
+  background-color: #f8f9fa;
+  bottom: 0;
+  color: var(--color);
+  display: none;
+  left: 0;
+  padding: var(--table-padding);
+  right: 0;
+  top: 0;
+}
+
+.br-table .selected-bar.show,
+.br-table .selection-bar.show {
+  display: flex;
+}
+
+.br-table .selected-bar .info,
+.br-table .selection-bar .info {
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  white-space: nowrap;
+}
+
+.br-table .selected-bar .info [data-toggle=check-all],
+.br-table .selected-bar .info .select-all,
+.br-table .selection-bar .info [data-toggle=check-all],
+.br-table .selection-bar .info .select-all {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+  padding: 0;
+}
+
+.br-table .selected-bar .text,
+.br-table .selected-bar .count,
+.br-table .selection-bar .text,
+.br-table .selection-bar .count {
+  line-height: 1;
+  padding-right: 0.5rem;
+}
+
+.br-table .selected-bar.is-active,
+.br-table .selected-bar.active,
+.br-table .selection-bar.is-active,
+.br-table .selection-bar.active {
+  opacity: 1;
+  top: 0;
+}
+
+.br-table .footer,
+.br-table .table-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #ddd;
+}
+
+.br-table .footer .br-input .br-button,
+.br-table .table-footer .br-input .br-button {
+  transform: rotate(180deg);
+}
+
+.br-table .footer .br-list,
+.br-table .table-footer .br-list {
+  bottom: 100%;
+}
+
+/* Simple table structure styles */
+.br-table table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+
+  th {
+    font-weight: 600;
+    color: var(--color-primary-default, #1351B4);
+  }
+}
+
+/* --- DateTimePicker Styles provided by User --- */
+.flatpickr-calendar {
+  --flatpicker-padding: var(--spacing-scale-2x, 16px);
+  --datetimepicker-day-size: 24px;
+  --datetimepicker-arrows: 32px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  /* var(--surface-shadow-md) fallback */
+}
+
+.flatpickr-calendar.arrowTop::before,
+.flatpickr-calendar.arrowTop::after {
+  border-color: transparent;
+}
+
+.flatpickr-calendar.open {
+  z-index: 9999;
+  /* var(--z-index-layer-2) fallback */
+}
+
+.flatpickr-calendar .flatpickr-months {
+  align-items: center;
+  display: flex;
+  padding: var(--flatpicker-padding) var(--flatpicker-padding) 0;
+}
+
+.flatpickr-calendar .flatpickr-months .flatpickr-prev-month,
+.flatpickr-calendar .flatpickr-months .flatpickr-next-month {
+  height: auto;
+  padding: 0;
+  position: static;
+}
+
+.flatpickr-calendar .flatpickr-months .flatpickr-prev-month.flatpickr-disabled,
+.flatpickr-calendar .flatpickr-months .flatpickr-next-month.flatpickr-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  /* var(--disabled) fallback */
+}
+
+.flatpickr-calendar .flatpickr-months .flatpickr-prev-month.flatpickr-disabled *,
+.flatpickr-calendar .flatpickr-months .flatpickr-next-month.flatpickr-disabled * {
+  pointer-events: none;
+}
+
+.flatpickr-calendar .flatpickr-months .flatpickr-prev-month.flatpickr-disabled,
+.flatpickr-calendar .flatpickr-months .flatpickr-next-month.flatpickr-disabled {
+  display: block;
+}
+
+.flatpickr-calendar .flatpickr-months .flatpickr-month {
+  flex: 1;
+  height: auto;
+  overflow: visible;
+}
+
+.flatpickr-calendar .flatpickr-months .flatpickr-current-month {
+  display: flex;
+  height: auto;
+  padding: 0 var(--flatpicker-padding);
+  position: static;
+  width: 100%;
+}
+
+.flatpickr-calendar .flatpickr-months .flatpickr-monthDropdown-months {
+  border-radius: 4px;
+  color: #1351B4;
+  /* var(--interactive) fallback */
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+}
+
+.flatpickr-calendar .flatpickr-months .flatpickr-monthDropdown-months .flatpickr-monthDropdown-month {
+  color: #333;
+}
+
+.flatpickr-calendar .flatpickr-months .flatpickr-monthDropdown-months:hover {
+  background: transparent;
+}
+
+.flatpickr-calendar .flatpickr-months .numInputWrapper {
+  flex: 1;
+  margin-left: var(--flatpicker-padding);
+  width: auto;
+}
+
+.flatpickr-calendar .flatpickr-months .numInputWrapper input.cur-year {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0 8px;
+}
+
+.flatpickr-calendar .flatpickr-months .numInputWrapper span.arrowUp,
+.flatpickr-calendar .flatpickr-months .numInputWrapper span.arrowDown {
+  display: none;
+}
+
+.flatpickr-calendar .flatpickr-weekdaycontainer {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 0 var(--flatpicker-padding);
+}
+
+.flatpickr-calendar span.flatpickr-weekday {
+  color: #333;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.flatpickr-calendar .dayContainer {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 0 var(--flatpicker-padding) var(--flatpicker-padding);
+}
+
+.flatpickr-calendar .flatpickr-day {
+  color: #1351B4;
+  font-weight: 600;
+  height: var(--datetimepicker-day-size);
+  line-height: var(--datetimepicker-day-size);
+  margin: calc(var(--flatpicker-padding) * 0.25) auto;
+  max-width: var(--datetimepicker-day-size);
+  width: var(--datetimepicker-day-size);
+  border-radius: 50%;
+  /* Ensuring circle shape if needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flatpickr-calendar .flatpickr-day:focus {
+  outline: none;
+}
+
+.flatpickr-calendar .flatpickr-day.focus-visible,
+.flatpickr-calendar .flatpickr-day:focus-visible {
+  outline: 2px solid orange;
+}
+
+.flatpickr-calendar .flatpickr-day.focus-visible {
+  background: transparent;
+  border-color: transparent;
+}
+
+.flatpickr-calendar .flatpickr-day:hover {
+  background: #f0f0f0;
+}
+
+.flatpickr-calendar .flatpickr-day.prevMonthDay,
+.flatpickr-calendar .flatpickr-day.nextMonthDay {
+  font-weight: 500;
+  opacity: 0.6;
+}
+
+.flatpickr-calendar .flatpickr-day.today {
+  background: #e6f1fc;
+  border-color: transparent;
+  color: #1351B4;
+}
+
+.flatpickr-calendar .flatpickr-day.flatpickr-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.flatpickr-calendar .flatpickr-day.flatpickr-disabled * {
+  pointer-events: none;
+}
+
+.flatpickr-calendar .flatpickr-day.flatpickr-disabled {
+  color: #ccc;
+}
+
+.flatpickr-calendar .flatpickr-day.flatpickr-disabled:hover {
+  background: transparent;
+}
+
+.flatpickr-calendar .flatpickr-day.inRange {
+  background-image: linear-gradient(#e6f1fc, #e6f1fc);
+  border-color: transparent;
+  box-shadow: none;
+  color: #1351B4;
+  opacity: 1;
+}
+
+.flatpickr-calendar .flatpickr-day.selected,
+.flatpickr-calendar .flatpickr-day.startRange,
+.flatpickr-calendar .flatpickr-day.endRange {
+  background: #1351B4;
+  border-color: transparent;
+  color: white;
+  opacity: 1;
+}
+
+.flatpickr-calendar .flatpickr-time {
+  display: flex;
+  justify-content: center;
+  margin: 0 var(--flatpicker-padding);
+  max-height: none;
+}
+
+.flatpickr-calendar .flatpickr-time input {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #333;
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  height: 40px;
+  padding: 0 0.5rem;
+  width: 100%;
+}
+
+.flatpickr-calendar .flatpickr-time input:not(:disabled):hover {
+  background-image: linear-gradient(#f0f0f0, #f0f0f0);
+}
+
+.flatpickr-calendar .flatpickr-time input:focus {
+  border-color: orange !important;
+  box-shadow: 0 0 0 4px rgba(255, 165, 0, 0.4);
+  outline: none;
+}
+
+.flatpickr-calendar .flatpickr-time input.has-icon {
+  padding-right: 2.5rem;
+}
+
+.flatpickr-calendar .flatpickr-time input {
+  margin: calc(var(--flatpicker-padding) * 0.25) 0;
+}
+
+.flatpickr-calendar .flatpickr-time .numInputWrapper {
+  align-items: center;
+  display: flex;
+  flex: 0 1 90px;
+  flex-flow: column;
+  height: auto;
+  padding: calc(var(--flatpicker-padding) * 0.5) var(--flatpicker-padding);
+}
+
+.flatpickr-calendar .flatpickr-time .numInputWrapper:hover {
+  background: transparent;
+}
+
+.flatpickr-calendar .flatpickr-time .numInputWrapper span:not(:disabled):hover {
+  background-image: linear-gradient(#f0f0f0, #f0f0f0);
+}
+
+.flatpickr-calendar .flatpickr-time .numInputWrapper span {
+  align-items: center;
+  border: 0;
+  border-radius: 50px;
+  color: #1351B4;
+  display: flex;
+  height: var(--datetimepicker-arrows);
+  justify-content: center;
+  opacity: 1;
+  padding: 0;
+  position: static;
+  width: var(--datetimepicker-arrows);
+}
+
+.flatpickr-calendar .flatpickr-time .numInputWrapper span::after {
+  border: none;
+  position: static;
+}
+
+.flatpickr-calendar .flatpickr-time .numInputWrapper span.arrowUp {
+  order: -1;
+}
+
+.flatpickr-calendar .flatpickr-time .numInputWrapper span.arrowUp::after {
+  content: "▲";
+  transform: none;
+}
+
+.flatpickr-calendar .flatpickr-time .numInputWrapper span.arrowDown::after {
+  content: "▼";
+}
+
+.flatpickr-calendar.hasTime .flatpickr-time {
+  border-color: #eee;
+  height: auto;
+}
+
+.flatpickr-calendar.hasTime.noCalendar .flatpickr-time {
+  border-color: transparent;
+}
+
+.br-datetimepicker.inverted .br-input,
+.br-datetimepicker.inverted .br-input label,
+.br-datetimepicker.dark-mode .br-input,
+.br-datetimepicker.dark-mode .br-input label {
+  --color: #333;
+  --focus-color: orange;
+}
+
+.br-datetimepicker input[disabled] {
+  cursor: not-allowed;
+}
+
+/* Hide native browser date/time pickers to avoid duplication with Gov.br picker */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
