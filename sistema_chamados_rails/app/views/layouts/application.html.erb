@@ -43,9 +43,27 @@
             <div class="header-sign ml-2">Superintendência do Desenvolvimento do Nordeste</div>
           </div>
           <div class="header-actions">
-            <%= link_to new_chamado_path, class: "br-button primary", type: "button" do %>
-              <i class="fas fa-plus mr-1" aria-hidden="true"></i>
-              Novo Chamado
+            <% if authenticated? %>
+              <div class="d-flex align-items-center">
+                <span class="mr-3 text-small">Olá, <%= current_user.email_address %> (<%= current_user.role.capitalize %>)</span>
+                
+                <% if admin? %>
+                  <%= link_to new_chamado_path, class: "br-button primary mr-3", type: "button" do %>
+                    <i class="fas fa-plus mr-1" aria-hidden="true"></i>
+                    Novo Chamado
+                  <% end %>
+                <% end %>
+
+                <%= link_to session_path, data: { turbo_method: :delete }, class: "br-button secondary", type: "button" do %>
+                  <i class="fas fa-sign-out-alt mr-1" aria-hidden="true"></i>
+                  Sair
+                <% end %>
+              </div>
+            <% else %>
+               <%= link_to new_session_path, class: "br-button primary", type: "button" do %>
+                <i class="fas fa-user mr-1" aria-hidden="true"></i>
+                Entrar
+              <% end %>
             <% end %>
           </div>
         </div>

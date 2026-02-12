@@ -13,4 +13,6 @@
   <% end %>
 </div>
 
-<%= link_to "New chamado", new_chamado_path %>
+<% if admin? %>
+  <%= link_to "New chamado", new_chamado_path %>
+<% end %>

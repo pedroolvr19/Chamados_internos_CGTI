@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  chamado: one
+  tecnico_antigo: MyString
+  tecnico_novo: MyString
+  data_alteracao: 2026-02-11 13:16:49
+
+two:
+  chamado: two
+  tecnico_antigo: MyString
+  tecnico_novo: MyString
+  data_alteracao: 2026-02-11 13:16:49

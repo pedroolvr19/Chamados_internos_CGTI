@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_09_141641) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_11_161649) do
+  create_table "chamado_historicos", force: :cascade do |t|
+    t.integer "chamado_id", null: false
+    t.string "tecnico_antigo"
+    t.string "tecnico_novo"
+    t.datetime "data_alteracao"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chamado_id"], name: "index_chamado_historicos_on_chamado_id"
+  end
+
   create_table "chamados", force: :cascade do |t|
     t.date "data_solicitacao"
     t.time "hora_solicitacao"
@@ -37,4 +47,14 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_09_141641) do
     t.datetime "updated_at", null: false
     t.index ["nome"], name: "index_tecnicos_on_nome"
   end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email_address"
+    t.string "password_digest"
+    t.integer "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "chamado_historicos", "chamados"
 end

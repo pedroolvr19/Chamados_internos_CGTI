@@ -1,8 +1,8 @@
 <%= form_with(model: chamado, class: "needs-validation") do |form| %>
   <% if chamado.errors.any? %>
-    <div class="alert alert-danger">
-      <h6 class="alert-heading"><%= pluralize(chamado.errors.count, "erro") %> impediram este chamado de ser salvo:</h6>
-      <ul class="mb-0">
+    <div class="alert alert-danger py-2">
+      <h6 class="alert-heading text-small mb-1"><%= pluralize(chamado.errors.count, "erro") %> impediram este chamado de ser salvo:</h6>
+      <ul class="mb-0 text-small">
         <% chamado.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -10,120 +10,108 @@
     </div>
   <% end %>
 
-  <div class="card shadow-sm mb-4">
-    <div class="card-header bg-light">
-      <h5 class="mb-0"><i class="bi bi-calendar-event"></i> Data e Hora</h5>
+  <!-- CARD 1: Dados da Solicitação -->
+  <div class="card shadow-sm mb-3">
+    <div class="card-header bg-light py-2">
+      <h6 class="mb-0 fw-bold"><i class="bi bi-file-earmark-person"></i> Dados da Solicitação</h6>
     </div>
-    <div class="card-body">
-      <div class="row g-3">
-        <div class="col-md-6">
-          <%= form.label :data_solicitacao, "Data da Solicitação *", class: "form-label" %>
-          <%= form.label :data_solicitacao, "Data da Solicitação *", class: "form-label" %>
-          <%= gov_date_picker(form, :data_solicitacao, "Data da Solicitação", required: true) %>
+    <div class="card-body py-3">
+      <!-- Linha 1: Data, Hora, Identificação -->
+      <div class="row g-2 mb-3">
+        <div class="col-md-3">
+          <%= form.label :data_solicitacao, "Data *", class: "form-label text-small mb-1 fw-bold" %>
+          <%= gov_date_picker(form, :data_solicitacao, "Data", required: true, class: "form-control form-control-sm") %>
         </div>
-        <div class="col-md-6">
-          <%= form.label :hora_solicitacao, "Hora da Solicitação *", class: "form-label" %>
-          <%= form.label :hora_solicitacao, "Hora da Solicitação *", class: "form-label" %>
-          <%= gov_time_picker(form, :hora_solicitacao, "Hora da Solicitação", required: true) %>
+        <div class="col-md-2">
+          <%= form.label :hora_solicitacao, "Hora *", class: "form-label text-small mb-1 fw-bold" %>
+          <%= gov_time_picker(form, :hora_solicitacao, "Hora", required: true, class: "form-control form-control-sm") %>
+        </div>
+        <div class="col-md-2">
+          <%= form.label :ramal, class: "form-label text-small mb-1 fw-bold" %>
+          <%= form.text_field :ramal, class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-3">
+          <%= form.label :setor, class: "form-label text-small mb-1 fw-bold" %>
+          <%= form.text_field :setor, class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-2">
+          <%= form.label :andar, class: "form-label text-small mb-1 fw-bold" %>
+          <%= form.text_field :andar, class: "form-control form-control-sm" %>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div class="card shadow-sm mb-4">
-    <div class="card-header bg-light">
-      <h5 class="mb-0"><i class="bi bi-person"></i> Solicitante</h5>
-    </div>
-    <div class="card-body">
-      <div class="row g-3">
-        <div class="col-md-6">
-          <%= form.label :nome_solicitante, "Nome do Solicitante *", class: "form-label" %>
-          <%= form.text_field :nome_solicitante, class: "form-control", required: true %>
-        </div>
-        <div class="col-md-6">
-          <%= form.label :ramal, class: "form-label" %>
-          <%= form.text_field :ramal, class: "form-control" %>
-        </div>
-        <div class="col-md-6">
-          <%= form.label :setor, class: "form-label" %>
-          <%= form.text_field :setor, class: "form-control" %>
-        </div>
-        <div class="col-md-6">
-          <%= form.label :andar, class: "form-label" %>
-          <%= form.text_field :andar, class: "form-control" %>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card shadow-sm mb-4">
-    <div class="card-header bg-light">
-      <h5 class="mb-0"><i class="bi bi-file-text"></i> Descrição</h5>
-    </div>
-    <div class="card-body">
-      <div class="row g-3">
+      <!-- Linha 2: Nome Solicitante -->
+      <div class="row g-2 mb-3">
         <div class="col-12">
-          <%= form.label :descricao_solicitacao, "Descrição da Solicitação *", class: "form-label" %>
-          <%= form.text_area :descricao_solicitacao, rows: 4, class: "form-control", required: true %>
+          <%= form.label :nome_solicitante, "Nome do Solicitante *", class: "form-label text-small mb-1 fw-bold" %>
+          <%= form.text_field :nome_solicitante, class: "form-control form-control-sm", required: true %>
         </div>
-        <div class="col-12">
-          <%= form.label :detalhe, "Detalhes Adicionais", class: "form-label" %>
-          <%= form.text_area :detalhe, rows: 3, class: "form-control" %>
+      </div>
+
+      <!-- Linha 3: Descrição e Detalhes -->
+      <div class="row g-2">
+        <div class="col-md-6">
+          <%= form.label :descricao_solicitacao, "Descrição da Solicitação *", class: "form-label text-small mb-1 fw-bold" %>
+          <%= form.text_area :descricao_solicitacao, rows: 4, class: "form-control form-control-sm", required: true %>
+        </div>
+        <div class="col-md-6">
+          <%= form.label :detalhe, "Detalhes Adicionais", class: "form-label text-small mb-1 fw-bold" %>
+          <%= form.text_area :detalhe, rows: 4, class: "form-control form-control-sm" %>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="card shadow-sm mb-4 border-info">
-    <div class="card-header bg-info bg-opacity-10 text-dark">
-      <h5 class="mb-0"><i class="bi bi-people"></i> Atribuição</h5>
+  <!-- CARD 2: Área Técnica -->
+  <div class="card shadow-sm mb-3 border-info">
+    <div class="card-header bg-info bg-opacity-10 text-dark py-2">
+      <h6 class="mb-0 fw-bold"><i class="bi bi-gear-fill"></i> Área Técnica</h6>
     </div>
-    <div class="card-body">
-      <div class="row g-3">
-        <div class="col-md-6">
-          <%= form.label :tecnico_responsavel, "Técnico Responsável", class: "form-label" %>
-          <%= form.select :tecnico_responsavel, Tecnico.nomes_ativos, { include_blank: "Não atribuído" }, class: "form-select" %>
+    <div class="card-body py-3">
+      <!-- Linha 1: Atribuição -->
+      <div class="row g-2 mb-3">
+        <div class="col-md-4">
+          <%= form.label :tecnico_responsavel, "Técnico Responsável", class: "form-label text-small mb-1 fw-bold" %>
+          <%= form.select :tecnico_responsavel, Tecnico.nomes_ativos, { include_blank: "Não atribuído" }, class: "form-select form-select-sm" %>
         </div>
-        <div class="col-md-6">
-             <%= form.label :status, "Status Inicial", class: "form-label" %>
-             <%= form.select :status, Chamado::STATUS_OPCOES, {}, class: "form-select" %>
+        <div class="col-md-4">
+          <%= form.label :status, "Status", class: "form-label text-small mb-1 fw-bold" %>
+          <%= form.select :status, Chamado::STATUS_OPCOES, {}, class: "form-select form-select-sm" %>
         </div>
+        <% unless chamado.new_record? %>
+          <div class="col-md-4">
+             <%= form.label :data_fechamento, "Data de Fechamento", class: "form-label text-small mb-1 fw-bold" %>
+             <%= gov_datetime_picker(form, :data_fechamento, "Data de Fechamento", class: "form-control form-control-sm") %>
+          </div>
+        <% end %>
       </div>
+
+      <% unless chamado.new_record? %>
+        <hr class="my-3 text-muted">
+        <!-- Linha 2: Atendimento -->
+        <h6 class="text-muted text-small mb-2 fw-bold text-uppercase"><i class="bi bi-clipboard-check"></i> Registro de Atendimento</h6>
+        <div class="row g-2">
+          <div class="col-md-4">
+            <%= form.label :constatado, class: "form-label text-small mb-1 fw-bold" %>
+            <%= form.text_area :constatado, rows: 3, class: "form-control form-control-sm" %>
+          </div>
+          <div class="col-md-4">
+            <%= form.label :providencia, "Providência", class: "form-label text-small mb-1 fw-bold" %>
+            <%= form.text_area :providencia, rows: 3, class: "form-control form-control-sm" %>
+          </div>
+          <div class="col-md-4">
+            <%= form.label :providenciado, class: "form-label text-small mb-1 fw-bold" %>
+            <%= form.text_area :providenciado, rows: 3, class: "form-control form-control-sm" %>
+          </div>
+
+        </div>
+      <% end %>
     </div>
   </div>
 
-  <% unless chamado.new_record? %>
-    <div class="card shadow-sm mb-4 border-warning">
-      <div class="card-header bg-warning bg-opacity-10 text-dark">
-        <h5 class="mb-0"><i class="bi bi-tools"></i> Atendimento</h5>
-      </div>
-      <div class="card-body">
-        <div class="row g-3">
-          <div class="col-12">
-            <%= form.label :constatado, class: "form-label" %>
-            <%= form.text_area :constatado, rows: 3, class: "form-control" %>
-          </div>
-          <div class="col-12">
-            <%= form.label :providencia, "Providência", class: "form-label" %>
-            <%= form.text_area :providencia, rows: 3, class: "form-control" %>
-          </div>
-          <div class="col-12">
-            <%= form.label :providenciado, class: "form-label" %>
-            <%= form.text_area :providenciado, rows: 3, class: "form-control" %>
-          </div>
-           <div class="col-12">
-             <%= form.label :data_fechamento, "Data de Fechamento", class: "form-label" %>
-             <%= form.label :data_fechamento, "Data de Fechamento", class: "form-label" %>
-             <%= gov_datetime_picker(form, :data_fechamento, "Data de Fechamento") %>
-          </div>
-        </div>
-      </div>
-    </div>
-  <% end %>
-
-  <div class="d-flex justify-content-end gap-2 mb-5">
-    <%= link_to "Voltar", root_path, class: "br-button secondary mr-3" %>
-    <%= form.button class: "br-button primary" do %>
+  <div class="d-flex justify-content-end gap-2 mb-4">
+    <%= link_to "Voltar", root_path, class: "br-button secondary small mr-3" %>
+    <%= form.button class: "br-button primary small" do %>
       <i class="fas fa-save mr-1"></i> Salvar Alterações
     <% end %>
   </div>

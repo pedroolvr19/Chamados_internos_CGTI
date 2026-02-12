@@ -1,9 +1,27 @@
 class ChamadosController < ApplicationController
+  before_action :require_authentication
+  before_action :require_admin, only: %i[ new create edit update destroy ]
   before_action :set_chamado, only: %i[ show edit update destroy ]
 
   # GET /chamados
   def index
-    redirect_to root_path
+    # Filter logic similar to dashboard
+    @chamados = Chamado.all.order(created_at: :desc)
+
+    if params[:status].present?
+      @chamados = @chamados.where(status: params[:status])
+    end
+
+    if params[:tecnico].present?
+      @chamados = @chamados.where(tecnico_responsavel: params[:tecnico])
+    end
+
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.pdf do
+        render pdf: "chamados", template: "chamados/index", formats: [:pdf]
+      end
+    end
   end
 
   # GET /chamados/1
@@ -24,11 +42,10 @@ class ChamadosController < ApplicationController
   # POST /chamados
   def create
     @chamado = Chamado.new(chamado_params)
-    @chamado = Chamado.new(chamado_params)
-    # Status defaults to 'Aberto' if not set, or respects form selection
+    @chamado.status = 'Aberto' if @chamado.status.blank?
 
     if @chamado.save
-      redirect_to @chamado, notice: "Chamado criado com sucesso."
+      redirect_to root_path, notice: "Chamado criado com sucesso."
     else
       render :new, status: :unprocessable_entity
     end

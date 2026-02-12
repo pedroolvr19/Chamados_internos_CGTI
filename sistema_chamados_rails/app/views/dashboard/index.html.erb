@@ -72,6 +72,9 @@
           <%= link_to root_path, class: "br-button secondary mt-4" do %>
             <i class="fas fa-times-circle mr-1"></i> Limpar
           <% end %>
+          <%= link_to chamados_path(format: :pdf, status: params[:status], tecnico: params[:tecnico]), class: "br-button secondary mt-4 ms-2", target: "_blank" do %>
+            <i class="fas fa-file-pdf mr-1"></i> Exportar PDF
+          <% end %>
         </div>
       </div>
     <% end %>
@@ -158,8 +161,10 @@
                  <%= link_to chamado_path(chamado), class: "br-button circle small secondary", title: "Visualizar" do %>
                     <i class="fas fa-eye"></i>
                   <% end %>
-                  <%= link_to edit_chamado_path(chamado), class: "br-button circle small secondary", title: "Editar" do %>
-                    <i class="fas fa-pen"></i>
+                  <% if admin? %>
+                    <%= link_to edit_chamado_path(chamado), class: "br-button circle small secondary", title: "Editar" do %>
+                      <i class="fas fa-pen"></i>
+                    <% end %>
                   <% end %>
               </div>
             </td>

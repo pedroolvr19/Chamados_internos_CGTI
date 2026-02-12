@@ -1,4 +1,8 @@
 class Chamado < ApplicationRecord
+  has_many :chamado_historicos, dependent: :destroy
+
+  before_update :registrar_historico_tecnico, if: :will_save_change_to_tecnico_responsavel?
+
   STATUS_OPCOES = [
     'Aberto',
     'Em Atendimento',
@@ -24,5 +28,15 @@ class Chamado < ApplicationRecord
     when 'Cancelado' then 'bg-danger'
     else 'bg-secondary'
     end
+  end
+  private
+
+  def registrar_historico_tecnico
+    ChamadoHistorico.create(
+      chamado: self,
+      tecnico_antigo: tecnico_responsavel_before_last_save || tecnico_responsavel_was,
+      tecnico_novo: tecnico_responsavel,
+      data_alteracao: Time.current
+    )
   end
 end
