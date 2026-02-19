@@ -161,7 +161,7 @@
                  <%= link_to chamado_path(chamado), class: "br-button circle small secondary", title: "Visualizar" do %>
                     <i class="fas fa-eye"></i>
                   <% end %>
-                  <% if admin? %>
+                  <% if can? :update, chamado %>
                     <%= link_to edit_chamado_path(chamado), class: "br-button circle small secondary", title: "Editar" do %>
                       <i class="fas fa-pen"></i>
                     <% end %>

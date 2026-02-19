@@ -1,12 +1,10 @@
 class ChamadosController < ApplicationController
+  load_and_authorize_resource
   before_action :require_authentication
-  before_action :require_admin, only: %i[ new create edit update destroy ]
-  before_action :set_chamado, only: %i[ show edit update destroy ]
 
   # GET /chamados
   def index
-    # Filter logic similar to dashboard
-    @chamados = Chamado.all.order(created_at: :desc)
+    @chamados = @chamados.recentes
 
     if params[:status].present?
       @chamados = @chamados.where(status: params[:status])
@@ -17,6 +15,19 @@ class ChamadosController < ApplicationController
     end
 
     respond_to do |format|
+      format.html { redirect_to root_path } unless current_user # Should be handled by require_authentication
+      format.html # Render index if authorized (though root_path redirect logic in original was weird, maybe preserving intended flow?)
+      # Wait, original index redirected to root_path for HTML?
+      # "format.html { redirect_to root_path }" - yes. Let's keep it if that's the design.
+      # User might want to see the list on /chamados only for debugging or specific roles?
+      # If Viewer can read, they might see it.
+      # Let's assume standard behavior unless specific reason. 
+      # Original code:
+      # format.html { redirect_to root_path }
+      # format.pdf ...
+      
+      # If the intention is that /chamados is not a viewable page for HTML, then redirecting to root is fine.
+      
       format.html { redirect_to root_path }
       format.pdf do
         render pdf: "chamados", template: "chamados/index", formats: [:pdf]
@@ -30,9 +41,9 @@ class ChamadosController < ApplicationController
 
   # GET /chamados/new
   def new
-    @chamado = Chamado.new
-    @chamado.data_solicitacao = Date.today
-    @chamado.hora_solicitacao = Time.now.change(sec: 0)
+    # @chamado is initialized by load_and_authorize_resource
+    @chamado.data_solicitacao ||= Date.today
+    @chamado.hora_solicitacao ||= Time.now.change(sec: 0)
   end
 
   # GET /chamados/1/edit
@@ -41,7 +52,7 @@ class ChamadosController < ApplicationController
 
   # POST /chamados
   def create
-    @chamado = Chamado.new(chamado_params)
+    # @chamado is initialized with calling resource_params (chamado_params) by CanCanCan
     @chamado.status = 'Aberto' if @chamado.status.blank?
 
     if @chamado.save
@@ -53,6 +64,7 @@ class ChamadosController < ApplicationController
 
   # PATCH/PUT /chamados/1
   def update
+    # @chamado is loaded
     if @chamado.update(chamado_params)
       redirect_to @chamado, notice: "Chamado atualizado com sucesso."
     else
@@ -67,9 +79,7 @@ class ChamadosController < ApplicationController
   end
 
   private
-    def set_chamado
-      @chamado = Chamado.find(params[:id])
-    end
+    # set_chamado removed (handled by CanCanCan)
 
     def chamado_params
       params.require(:chamado).permit(

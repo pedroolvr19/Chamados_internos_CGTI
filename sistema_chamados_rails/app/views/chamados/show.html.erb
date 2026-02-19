@@ -6,7 +6,7 @@
     <%= link_to root_path, class: "btn btn-outline-secondary" do %>
       <i class="bi bi-arrow-left"></i> Voltar
     <% end %>
-    <% if admin? %>
+    <% if can? :update, @chamado %>
       <%= link_to edit_chamado_path(@chamado), class: "btn btn-warning" do %>
         <i class="bi bi-pencil"></i> Editar
       <% end %>
@@ -178,7 +178,7 @@
     </div>
 
     <!-- Actions Card -->
-    <% if admin? %>
+    <% if can? :destroy, @chamado %>
       <div class="card shadow-sm border-danger">
         <div class="card-body">
           <h6 class="text-danger mb-3">Finalizar Chamado</h6>

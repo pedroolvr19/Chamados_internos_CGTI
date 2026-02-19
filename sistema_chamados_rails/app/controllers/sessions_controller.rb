@@ -1,6 +1,5 @@
 class SessionsController < ApplicationController
   allow_browser versions: :modern
-  
   def new
   end
 

@@ -13,6 +13,6 @@
   <% end %>
 </div>
 
-<% if admin? %>
+<% if can? :create, Chamado %>
   <%= link_to "New chamado", new_chamado_path %>
 <% end %>

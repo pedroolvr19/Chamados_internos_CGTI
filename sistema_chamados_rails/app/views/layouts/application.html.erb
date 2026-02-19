@@ -47,7 +47,7 @@
               <div class="d-flex align-items-center">
                 <span class="mr-3 text-small">Olá, <%= current_user.email_address %> (<%= current_user.role.capitalize %>)</span>
                 
-                <% if admin? %>
+                <% if can? :create, Chamado %>
                   <%= link_to new_chamado_path, class: "br-button primary mr-3", type: "button" do %>
                     <i class="fas fa-plus mr-1" aria-hidden="true"></i>
                     Novo Chamado

@@ -5,13 +5,9 @@
 # docker build -t sistema_chamados_rails .
 # docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name sistema_chamados_rails sistema_chamados_rails
 
-# For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
-
-# Make sure RUBY_VERSION matches the Ruby version in .ruby-version
 ARG RUBY_VERSION=3.4.5
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
-# Rails app lives here
 WORKDIR /rails
 
 # Install base packages
@@ -22,15 +18,14 @@ RUN apt-get update -qq && \
 # Set production environment
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
+    BUNDLE_PATH="/usr/local/bundle"
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build
 
 # Install packages needed to build gems and node modules
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libyaml-dev node-gyp pkg-config python-is-python3 && \
+    apt-get install --no-install-recommends -y build-essential git libyaml-dev pkg-config python-is-python3 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install JavaScript dependencies
@@ -66,9 +61,7 @@ RUN chmod +x bin/* && \
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
-
 RUN rm -rf node_modules
-
 
 # Final stage for app image
 FROM base
@@ -76,6 +69,9 @@ FROM base
 # Copy built artifacts: gems, application
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
+
+# Add Rails bin to PATH
+ENV PATH="/rails/bin:${PATH}"
 
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
